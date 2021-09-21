@@ -1,0 +1,26 @@
+.form_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.form_container input[type=text] {
+    border: 0px;
+    border-bottom: 1px solid #F1C40F;
+    font-size: 1.5em;
+    margin: 0.25em;
+}
+
+.form_container .button {
+    border: 1px solid #95A5A6;
+    font-size: 1.5em;
+    margin: 0.25em;
+}
+
+pre {
+    font-size: 1.5em;
+    overflow: auto;
+    max-width: 840px;
+    margin: auto;
+    margin-top: 1em;
+}

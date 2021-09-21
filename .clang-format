@@ -1,0 +1,8 @@
+BasedOnStyle: Webkit
+
+PointerAlignment: Right
+SpacesBeforeTrailingComments: 2
+AlignTrailingComments: true
+AlignOperands: true
+IndentWidth: 4
+ColumnLimit: 80
