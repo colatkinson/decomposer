@@ -1,3 +1,5 @@
+workspace(name = "decomposer")
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
@@ -7,6 +9,12 @@ http_archive(
     urls = [
         "https://netactuate.dl.sourceforge.net/project/mingw/MinGW/Base/w32api/w32api-5.0.2/w32api-5.0.2-mingw32-dev.tar.xz",
     ],
+)
+
+http_archive(
+    name = "rules_python",
+    sha256 = "954aa89b491be4a083304a2cb838019c8b8c3720a7abb9c4cb81ac7a24230cea",
+    url = "https://github.com/bazelbuild/rules_python/releases/download/0.4.0/rules_python-0.4.0.tar.gz",
 )
 
 http_archive(
