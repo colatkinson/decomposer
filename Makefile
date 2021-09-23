@@ -19,3 +19,7 @@ fmt:
 lint:
 	find ./ \( -iname '*.cc' -o -iname '*.hh' \) -print0 | xargs -n 1 -0 clang-format --Werror --dry-run
 .PHONY: lint
+
+clean:
+	bazel clean
+.PHONY: clean
