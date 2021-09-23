@@ -16,7 +16,7 @@ namespace {
 
 #define E(flag) std::tuple<DWORD, const char *>(flag, #flag)
 
-constexpr std::array<std::tuple<DWORD, const char *>, 26> file_perms_map = {
+constexpr std::array<std::tuple<DWORD, const char *>, 34> file_perms_map = {
     E(FILE_GENERIC_EXECUTE),
     E(FILE_GENERIC_READ),
     E(FILE_GENERIC_WRITE),
@@ -37,15 +37,46 @@ constexpr std::array<std::tuple<DWORD, const char *>, 26> file_perms_map = {
     E(FILE_WRITE_EA),
     E(STANDARD_RIGHTS_READ),
     E(STANDARD_RIGHTS_WRITE),
+    E(STANDARD_RIGHTS_EXECUTE),
+    E(STANDARD_RIGHTS_ALL),
+    E(STANDARD_RIGHTS_REQUIRED),
+    E(SPECIFIC_RIGHTS_ALL),
+    E(ACCESS_SYSTEM_SECURITY),
     E(GENERIC_ALL),
     E(GENERIC_READ),
     E(GENERIC_WRITE),
     E(GENERIC_EXECUTE),
     E(DELETE),
+    E(READ_CONTROL),
     E(WRITE_DAC),
+    E(WRITE_OWNER),
+    E(SYNCHRONIZE),
 };
 
 #undef E
+
+constexpr const char *dupe_entry(const auto &flag_map) noexcept
+{
+    for (const auto &[_key, val] : flag_map) {
+        std::string_view val_view(val);
+
+        size_t count = 0;
+        for (const auto &[_key_inner, val_inner] : flag_map) {
+            if (val_view == val_inner) {
+                ++count;
+            }
+
+            if (count > 1) {
+                return val_inner;
+            }
+        }
+    }
+
+    return nullptr;
+}
+
+static_assert(dupe_entry(file_perms_map) == nullptr,
+    "Duplicate entry found in file_perms_map");
 
 template <size_t N>
 bool matches(const std::bitset<N> &flag, const std::bitset<N> &input) noexcept
@@ -81,7 +112,8 @@ bool decompose_flags(std::ostream &out, const std::string &num_str) noexcept
 
     const std::bitset<sizeof(num_dw) * CHAR_BIT> num_bs(num_dw);
 
-    std::map<DWORD, std::vector<const char *>> matched_flags;
+    std::map<DWORD, std::vector<const char *>, std::greater<DWORD>>
+        matched_flags;
 
     for (const auto &[k, v] : file_perms_map) {
         const std::bitset<sizeof(k) * CHAR_BIT> k_bs(k);
