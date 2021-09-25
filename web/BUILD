@@ -19,6 +19,7 @@ cc_binary(
     }),
     tags = ["manual"],
     deps = ["//decomposer"],
+    features = ["optimized_for_size"],
 )
 
 wasm_cc_binary(
