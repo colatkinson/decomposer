@@ -13,7 +13,7 @@ cc_binary(
     linkopts = select({
         "//rules:wasm_cpu": [
             """-s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'""",
-            """-s EXPORTED_FUNCTIONS='["_malloc", "_free", "stringToUTF8", "lengthBytesUTF8"]'""",
+            """-s EXPORTED_FUNCTIONS='["_malloc", "_free"]'""",
         ],
         "//conditions:default": [],
     }),

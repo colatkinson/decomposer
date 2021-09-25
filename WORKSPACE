@@ -32,11 +32,12 @@ http_archive(
 )
 
 # For building as wasm
+emsdk_commit = "deb6453391c3e0da66eee71a14bff64ce73ff713"
 http_archive(
     name = "emsdk",
-    sha256 = "7a58a9996b113d3e0675df30b5f17e28aa47de2e684a844f05394fe2f6f12e8e",
-    strip_prefix = "emsdk-c1589b55641787d55d53e883852035beea9aec3f/bazel",
-    url = "https://github.com/emscripten-core/emsdk/archive/c1589b55641787d55d53e883852035beea9aec3f.tar.gz",
+    sha256 = "fc3cbdcc72c5a4ea3349ca92cc53480b194be404e03847d51768b72b73714017",
+    strip_prefix = "emsdk-%s/bazel" % emsdk_commit,
+    url = "https://github.com/emscripten-core/emsdk/archive/%s.tar.gz" % emsdk_commit,
 )
 
 load("@emsdk//:deps.bzl", emsdk_deps = "deps")
