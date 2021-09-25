@@ -23,11 +23,16 @@ def _make_handler(base_path: str) -> Type[http.server.SimpleHTTPRequestHandler]:
 
     class _Handler(http.server.SimpleHTTPRequestHandler):
         def translate_path(self, path: str) -> str:
+            # Let the parent class deal with cleaning up the path
+            self.directory = "/"
+            path_raw = path
+            path = super().translate_path(path)
+
             rloc: Optional[str] = runfiles_inst.Rlocation(_join(base_path, path))
             if rloc is None:
                 rloc = runfiles_inst.Rlocation(_join(base_path, path, "index.html"))
 
-            self.log_message("Translate '%s' -> '%s'", path, rloc)
+            self.log_message("Translate '%s' -> '%s'", path_raw, rloc)
             if rloc is not None:
                 return rloc
 
