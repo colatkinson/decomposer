@@ -3,16 +3,6 @@
 var Module = {};
 
 function connectEvents() {
-    /*console.log(Module)
-    var myStr = "0x2"
-    var len = lengthBytesUTF8(myStr)
-    console.log(len)
-    var buf = Module._malloc(40)
-    stringToUTF8(myStr, buf, 40)
-    var res = Module.ccall("em_decompose_flags", "number", ["number"], [buf])
-    var outStr = UTF8ToString(res)
-    console.log("OUT", outStr)*/
-
     document.getElementById("num_submit").onclick = function(e) {
         e.preventDefault();
 
@@ -23,16 +13,23 @@ function connectEvents() {
 }
 
 function processString(str) {
-    // FIXME(colin): Free memory
     const len = lengthBytesUTF8(str);
     const buf = Module._malloc(len + 1);
-    stringToUTF8(str, buf, len + 1);
 
-    const res = Module.ccall("em_decompose_flags", "number", ["number"], [buf])
+    try {
+        stringToUTF8(str, buf, len + 1);
 
-    const outStr = UTF8ToString(res);
+        const res = Module.ccall("em_decompose_flags", "number", ["number"], [buf])
+        if (res === 0) {
+            throw "Ran out of memory -- got null from em_decompose_flags";
+        }
 
-    return outStr;
+        const outStr = UTF8ToString(res);
+
+        return outStr;
+    } finally {
+        Module.ccall("em_free", null, ["number"], [buf])
+    }
 }
 
 Module["onRuntimeInitialized"] = connectEvents;
