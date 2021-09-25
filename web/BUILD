@@ -14,6 +14,7 @@ cc_binary(
         "//rules:wasm_cpu": [
             """-s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'""",
             """-s EXPORTED_FUNCTIONS='["_malloc", "_free"]'""",
+            "-s FILESYSTEM=0",
         ],
         "//conditions:default": [],
     }),
