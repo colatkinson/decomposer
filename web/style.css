@@ -11,6 +11,10 @@
     margin: 0.25em;
 }
 
+input[type=submit][disabled] {
+    opacity: 0.65;
+}
+
 .form_container .button {
     border: 1px solid #95A5A6;
     font-size: 1.5em;

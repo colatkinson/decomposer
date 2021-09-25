@@ -8,9 +8,9 @@
         <title>Decomposer</title>
     </head>
     <body class="base00-background base05">
-        <form class="form_container" id="num_form">
+        <form class="form_container" id="num_form" action="" onsubmit="event.preventDefault();">
             <input type="text" id="num_input" class="base00-background base05" />
-            <input type="submit" class="button base00-background base05" value="Calculate" />
+            <input type="submit" id="num_submit" class="button base00-background base05" value="Calculate" disabled />
         </form>
         <pre id="num_out"></pre>
         <script type="text/javascript" src="dom.js"></script>

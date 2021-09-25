@@ -3,6 +3,8 @@
 var Module = {};
 
 function connectEvents() {
+    document.getElementById("num_submit").disabled = false;
+
     document.getElementById("num_form").onsubmit = function(e) {
         e.preventDefault();
 
