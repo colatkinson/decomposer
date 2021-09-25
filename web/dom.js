@@ -3,7 +3,7 @@
 var Module = {};
 
 function connectEvents() {
-    document.getElementById("num_submit").onclick = function(e) {
+    document.getElementById("num_form").onsubmit = function(e) {
         e.preventDefault();
 
         const res = processString(document.getElementById("num_input").value);
