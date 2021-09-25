@@ -23,3 +23,7 @@ lint:
 clean:
 	bazel clean
 .PHONY: clean
+
+compile-commands:
+	./scripts/compdb.sh
+.PHONY: compile-commands
