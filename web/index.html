@@ -3,16 +3,45 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!--
+        TODO(colin): is this actually beneficial?
+        <link rel="preload" href="decomposer-wasm/em_main.wasm" as="fetch" crossorigin />
+        <link rel="preload" href="decomposer-wasm/em_main.js" as="script" />
+        -->
+
+        <!--Load Fira Code from Google Fonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
         <link href="base16-flat.css" rel="stylesheet" />
         <link href="style.css" rel="stylesheet" />
         <title>Decomposer</title>
     </head>
     <body class="base00-background base05">
-        <form class="form_container" id="num_form" action="" onsubmit="event.preventDefault();">
-            <input type="text" id="num_input" class="base00-background base05" />
-            <input type="submit" id="num_submit" class="button base00-background base05" value="Calculate" disabled />
-        </form>
-        <pre id="num_out"></pre>
+        <header>
+            <h1>Decomposer</h1>
+            <p>Break win32 permission flags down to mulch</p>
+            <noscript>This requires JS and WASM to perform the conversions</noscript>
+        </header>
+        <main>
+            <form class="form_container" id="num_form" action="" onsubmit="event.preventDefault();">
+                <input
+                    type="text"
+                    id="num_input"
+                    class="base00-background base05"
+                    pattern="(?:0[xX])?[0-9a-fA-F]+" />
+                <input
+                    type="submit"
+                    id="num_submit"
+                    class="button base00-background base05"
+                    value="Mulch"
+                    disabled />
+            </form>
+            <pre id="num_out"></pre>
+        </main>
+
         <script type="text/javascript" src="dom.js"></script>
         <script async="" type="text/javascript" src="decomposer-wasm/em_main.js"></script>
     </body>

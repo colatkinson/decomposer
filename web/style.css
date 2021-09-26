@@ -1,3 +1,11 @@
+header h1, header p {
+    text-align: center;
+}
+
+header h1, header p, pre {
+    font-family: "Fira Code", monospace, sans-serif;
+}
+
 .form_container {
     display: flex;
     flex-wrap: wrap;
@@ -9,6 +17,11 @@
     border-bottom: 1px solid #F1C40F;
     font-size: 1.5em;
     margin: 0.25em;
+    outline: none;
+}
+
+.form_container input[type=text]:invalid {
+    border-bottom: 1px solid #E74C3C;
 }
 
 input[type=submit][disabled] {
