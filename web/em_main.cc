@@ -13,10 +13,7 @@ EMSCRIPTEN_KEEPALIVE char *em_decompose_flags(const char *num_str) noexcept
     }
 
     std::ostringstream sstr;
-    bool res = decomposer::decompose_flags(sstr, num_str);
-    if (!res) {
-        return nullptr;
-    }
+    [[maybe_unused]] bool res = decomposer::decompose_flags(sstr, num_str);
 
     std::string out = sstr.str();
     auto size = out.size() + 1;

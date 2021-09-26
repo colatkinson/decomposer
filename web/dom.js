@@ -8,9 +8,14 @@ function connectEvents() {
     document.getElementById("num_form").onsubmit = function(e) {
         e.preventDefault();
 
-        const res = processString(document.getElementById("num_input").value);
+        const outElem = document.getElementById("num_out");
 
-        document.getElementById("num_out").innerText = res;
+        try {
+            const res = processString(document.getElementById("num_input").value);
+            outElem.innerText = res;
+        } catch (err) {
+            outElem.innerText = "";
+        }
     };
 }
 

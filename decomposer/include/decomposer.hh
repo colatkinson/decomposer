@@ -5,7 +5,8 @@
 #include <string>
 
 namespace decomposer {
-bool decompose_flags(std::ostream &out, const std::string &num_str) noexcept;
+[[nodiscard]] bool decompose_flags(
+    std::ostream &out, const std::string &num_str) noexcept;
 };
 
 #endif /* DECOMPOSER_HH */
