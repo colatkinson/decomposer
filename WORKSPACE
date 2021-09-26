@@ -15,13 +15,15 @@ http_archive(
 # For packing up the output tarball
 http_archive(
     name = "rules_pkg",
+    sha256 = "a89e203d3cf264e564fcb96b6e06dd70bc0557356eb48400ce4b5d97c2c3720d",
     urls = [
         "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/0.5.1/rules_pkg-0.5.1.tar.gz",
         "https://github.com/bazelbuild/rules_pkg/releases/download/0.5.1/rules_pkg-0.5.1.tar.gz",
     ],
-    sha256 = "a89e203d3cf264e564fcb96b6e06dd70bc0557356eb48400ce4b5d97c2c3720d",
 )
+
 load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
+
 rules_pkg_dependencies()
 
 # For running the devserver
@@ -33,6 +35,7 @@ http_archive(
 
 # For building as wasm
 emsdk_commit = "deb6453391c3e0da66eee71a14bff64ce73ff713"
+
 http_archive(
     name = "emsdk",
     sha256 = "fc3cbdcc72c5a4ea3349ca92cc53480b194be404e03847d51768b72b73714017",
@@ -41,7 +44,9 @@ http_archive(
 )
 
 load("@emsdk//:deps.bzl", emsdk_deps = "deps")
+
 emsdk_deps()
 
 load("@emsdk//:emscripten_deps.bzl", emsdk_emscripten_deps = "emscripten_deps")
+
 emsdk_emscripten_deps()

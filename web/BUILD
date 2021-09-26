@@ -7,6 +7,7 @@ cc_binary(
     name = "em_main",
     srcs = ["em_main.cc"],
     copts = common_copts,
+    features = ["optimized_for_size"],
     linkopts = select({
         "//rules:wasm_cpu": [
             """-s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'""",
@@ -17,7 +18,6 @@ cc_binary(
     }),
     tags = ["manual"],
     deps = ["//decomposer"],
-    features = ["optimized_for_size"],
 )
 
 wasm_cc_binary(
@@ -53,6 +53,6 @@ pkg_files(
 pkg_tar(
     name = "site",
     srcs = [
-        ":wasm_files"
+        ":wasm_files",
     ] + static_files,
 )
