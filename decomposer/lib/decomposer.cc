@@ -94,6 +94,52 @@ bool matches(const std::bitset<N> &flag, const std::bitset<N> &input) noexcept
     return true;
 }
 
+std::ostream &print_dword(std::ostream &out, DWORD val) noexcept
+{
+    constexpr int dword_hex_chars = sizeof(DWORD) * 2;
+    out << std::hex << std::setw(dword_hex_chars) << std::setfill('0') << val;
+    return out;
+}
+
+using match_map
+    = std::map<DWORD, std::vector<const char *>, std::greater<DWORD>>;
+match_map get_matching_flags(const DWORD &num_dw) noexcept
+{
+    using dword_bitset = std::bitset<sizeof(DWORD) * CHAR_BIT>;
+    const dword_bitset num_bs(num_dw);
+
+    match_map matched_flags;
+
+    for (const auto &[flag, flag_str] : file_perms_map) {
+        const dword_bitset flag_bs(flag);
+
+        if (matches(flag_bs, num_bs)) {
+            auto &map_entry = matched_flags[flag];
+            map_entry.emplace_back(flag_str);
+        }
+    }
+
+    return matched_flags;
+}
+
+void print_matching_flags(
+    std::ostream &out, DWORD num_dw, const match_map &matched_flags) noexcept
+{
+    for (const auto &[val, names] : matched_flags) {
+        print_dword(out, val) << ": ";
+
+        for (const auto &name : names) {
+            out << name << ' ';
+        }
+
+        out << std::endl;
+
+        num_dw &= ~val;
+    }
+
+    print_dword(out, num_dw) << " unaccounted for\n";
+}
+
 }  // namespace
 
 namespace decomposer {
@@ -103,48 +149,15 @@ bool decompose_flags(std::ostream &out, const std::string &num_str) noexcept
         = std::strtoull(num_str.c_str(), nullptr, 0);
 
     if (num_int > MAXDWORD) {
-        std::cerr << "Too big" << std::endl;
+        out << num_str << " larger than MAXDWORD (0x" << std::hex << MAXDWORD
+            << ')' << std::endl;
         return false;
     }
     const auto num_dw = static_cast<DWORD>(num_int);
-    out << std::hex << std::setw(sizeof(DWORD) * 2) << std::setfill('0')
-        << num_dw << std::endl;
+    print_dword(out, num_dw) << '\n';
 
-    const std::bitset<sizeof(num_dw) * CHAR_BIT> num_bs(num_dw);
-
-    std::map<DWORD, std::vector<const char *>, std::greater<DWORD>>
-        matched_flags;
-
-    for (const auto &[k, v] : file_perms_map) {
-        const std::bitset<sizeof(k) * CHAR_BIT> k_bs(k);
-
-        if (matches(k_bs, num_bs)) {
-            auto map_entry = matched_flags.find(k);
-            if (map_entry == matched_flags.end()) {
-                matched_flags.emplace(k, std::vector<const char *>());
-                map_entry = matched_flags.find(k);
-            }
-
-            map_entry->second.emplace_back(v);
-        }
-    }
-
-    auto rem = num_dw;
-    for (const auto &[val, names] : matched_flags) {
-        out << std::hex << std::setw(sizeof(DWORD) * 2) << std::setfill('0')
-            << val << ": ";
-
-        for (const auto &name : names) {
-            out << name << ' ';
-        }
-
-        out << std::endl;
-
-        rem &= ~val;
-    }
-
-    out << std::hex << std::setw(sizeof(DWORD) * 2) << std::setfill('0') << rem
-        << " rem" << std::endl;
+    const auto matched_flags = get_matching_flags(num_dw);
+    print_matching_flags(out, num_dw, matched_flags);
 
     return true;
 }
