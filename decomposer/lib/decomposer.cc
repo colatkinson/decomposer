@@ -55,7 +55,8 @@ constexpr std::array<std::tuple<DWORD, const char *>, 34> file_perms_map = {
 
 #undef E
 
-constexpr const char *dupe_entry(const auto &flag_map) noexcept
+template <typename T>
+constexpr const char *dupe_entry(const T &flag_map) noexcept
 {
     for (const auto &[_key, val] : flag_map) {
         std::string_view val_view(val);

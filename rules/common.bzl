@@ -1,5 +1,5 @@
 common_copts = [
-    "-std=c++20",
+    "-std=c++17",
     "-Wall",
     "-Werror",
 ]
