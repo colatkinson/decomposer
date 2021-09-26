@@ -24,3 +24,31 @@ jobs:
         run: make
       - name: Test
         run: make test
+      - name: Optimized build
+        run: make opt
+      - uses: actions/upload-artifact@v2
+        with:
+          name: web-archive
+          path: bazel-bin/web/site.tar
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_test
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: web-archive
+      - name: Unpack
+        run: |
+          mkdir site
+          cd site
+          tar xf ../site.tar
+          ls -l
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: site
+          single-commit: true
