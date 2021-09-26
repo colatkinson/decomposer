@@ -5,7 +5,7 @@
 int main(int argc, char **argv)
 {
     if (argc != 2) {
-        std::cerr << "Need exactly one arg" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " 0xC0FFEE" << std::endl;
         return 1;
     }
 
