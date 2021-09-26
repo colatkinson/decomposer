@@ -29,7 +29,6 @@ wasm_cc_binary(
 )
 
 static_files = [
-    ":base16-flat.css",
     ":dom.js",
     ":index.html",
     ":style.css",

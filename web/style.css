@@ -1,3 +1,59 @@
+/* Adapted from base16-flat theme */
+/* https://github.com/chriskempson/base16-html-previews/blob/f76aee571c538ae6c1772881f2f47dce486fedd2/css/base16-flat.css */
+
+:root {
+    --base00: #2C3E50;
+    --base01: #34495E;
+    --base02: #7F8C8D;
+    --base03: #95A5A6;
+    --base04: #BDC3C7;
+    --base05: #e0e0e0;
+    --base06: #f5f5f5;
+    --base07: #ECF0F1;
+    --base08: #E74C3C;
+    --base09: #E67E22;
+    --base0A: #F1C40F;
+    --base0B: #2ECC71;
+    --base0C: #1ABC9C;
+    --base0D: #3498DB;
+    --base0E: #9B59B6;
+    --base0F: #be643c;
+}
+
+.base00 { color: var(--base00); }
+.base01 { color: var(--base01); }
+.base02 { color: var(--base02); }
+.base03 { color: var(--base03); }
+.base04 { color: var(--base04); }
+.base05 { color: var(--base05); }
+.base06 { color: var(--base06); }
+.base07 { color: var(--base07); }
+.base08 { color: var(--base08); }
+.base09 { color: var(--base09); }
+.base0A { color: var(--base0A); }
+.base0B { color: var(--base0B); }
+.base0C { color: var(--base0C); }
+.base0D { color: var(--base0D); }
+.base0E { color: var(--base0E); }
+.base0F { color: var(--base0F); }
+
+.base00-background { background-color: var(--base00); }
+.base01-background { background-color: var(--base01); }
+.base02-background { background-color: var(--base02); }
+.base03-background { background-color: var(--base03); }
+.base04-background { background-color: var(--base04); }
+.base05-background { background-color: var(--base05); }
+.base06-background { background-color: var(--base06); }
+.base07-background { background-color: var(--base07); }
+.base08-background { background-color: var(--base08); }
+.base09-background { background-color: var(--base09); }
+.base0A-background { background-color: var(--base0A); }
+.base0B-background { background-color: var(--base0B); }
+.base0C-background { background-color: var(--base0C); }
+.base0D-background { background-color: var(--base0D); }
+.base0E-background { background-color: var(--base0E); }
+.base0F-background { background-color: var(--base0F); }
+
 header h1, header p {
     text-align: center;
 }
@@ -14,14 +70,14 @@ header h1, header p, pre {
 
 .form_container input[type=text] {
     border: 0px;
-    border-bottom: 1px solid #F1C40F;
+    border-bottom: 1px solid var(--base0A);
     font-size: 1.5em;
     margin: 0.25em;
     outline: none;
 }
 
 .form_container input[type=text]:invalid {
-    border-bottom: 1px solid #E74C3C;
+    border-bottom: 1px solid var(--base08);
 }
 
 input[type=submit][disabled] {
@@ -29,7 +85,7 @@ input[type=submit][disabled] {
 }
 
 .form_container .button {
-    border: 1px solid #95A5A6;
+    border: 1px solid var(--base03);
     font-size: 1.5em;
     margin: 0.25em;
 }
