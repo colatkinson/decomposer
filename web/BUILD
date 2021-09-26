@@ -1,15 +1,12 @@
 load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
+load("//rules:common.bzl", "common_copts")
 
 cc_binary(
     name = "em_main",
     srcs = ["em_main.cc"],
-    copts = [
-        "-std=c++20",
-        "-Wall",
-        "-Werror",
-    ],
+    copts = common_copts,
     linkopts = select({
         "//rules:wasm_cpu": [
             """-s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'""",

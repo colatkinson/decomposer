@@ -1,3 +1,5 @@
+load("//rules:common.bzl", "common_copts")
+
 cc_library(
     name = "decomposer",
     srcs = [
@@ -8,10 +10,7 @@ cc_library(
     ],
     copts = [
         "-Iexternal/w32api/include",
-        "-std=c++20",
-        "-Wall",
-        "-Werror",
-    ],
+    ] + common_copts,
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     deps = ["@w32api//:w32api_hdrs"],
@@ -22,10 +21,6 @@ cc_binary(
     srcs = [
         "bin/main.cc",
     ],
-    copts = [
-        "-std=c++20",
-        "-Wall",
-        "-Werror",
-    ],
+    copts = common_copts,
     deps = [":decomposer"],
 )
