@@ -1,6 +1,6 @@
 # Decomposer
 
-Break win32 permission flags down to mulch
+Break win32 permission flags down to mulch.
 
 ## Description
 
@@ -39,7 +39,7 @@ It is available as both a native CLI, and as a WASM-powered web app.
 ### Prerequisites
 
 1. [Bazel](https://bazel.build/)
-2. A C++ compiler with support for C++20
+2. A C++ compiler with support for C++17
 3. `make`
 
 Everything else gets pulled down automatically by Bazel.
