@@ -1,0 +1,54 @@
+name: Build/Test
+on: [push, pull_request]
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    container: gcc@sha256:ce2b169ed11546eeada53533e02ed115d41328d816d2268f69c15c5f75ab3483
+    steps:
+      - name: Use python3 as python
+        run: ln -s /usr/bin/python3 /usr/bin/python
+      - name: Install clang-format
+        run: |
+          apt-get update && apt-get install -y clang-format-11
+          ln -s /usr/bin/clang-format-11 /usr/local/bin/clang-format
+      - name: Install bazelisk
+        run: |
+          wget https://github.com/bazelbuild/bazelisk/releases/download/v1.10.1/bazelisk-linux-amd64 -O /usr/local/bin/bazel
+          echo 4cb534c52cdd47a6223d4596d530e7c9c785438ab3b0a49ff347e991c210b2cd /usr/local/bin/bazel | sha256sum -c
+          chmod +x /usr/local/bin/bazel
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Lint
+        run: make lint
+      - name: Build
+        run: make
+      - name: Test
+        run: make test
+      - name: Optimized build
+        run: make opt
+      - uses: actions/upload-artifact@v2
+        with:
+          name: web-archive
+          path: bazel-bin/web/site.tar
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_test
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: web-archive
+      - name: Unpack
+        run: |
+          mkdir site
+          cd site
+          tar xf ../site.tar
+          ls -l
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: site
+          single-commit: true
